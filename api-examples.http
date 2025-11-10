@@ -1,0 +1,102 @@
+### Spring Boot DDD Example - API 테스트 예제
+### IntelliJ HTTP Client 또는 VS Code REST Client 확장을 사용하여 실행 가능
+
+@baseUrl = http://localhost:8080
+@contentType = application/json
+
+### 1. 상품 생성
+POST {{baseUrl}}/api/products
+Content-Type: {{contentType}}
+
+{
+  "name": "노트북",
+  "price": 1500000,
+  "description": "고성능 게이밍 노트북",
+  "stockQuantity": 50
+}
+
+### 2. 상품 생성 - 추가 예제
+POST {{baseUrl}}/api/products
+Content-Type: {{contentType}}
+
+{
+  "name": "마우스",
+  "price": 50000,
+  "description": "무선 게이밍 마우스",
+  "stockQuantity": 100
+}
+
+### 3. 상품 생성 - 추가 예제
+POST {{baseUrl}}/api/products
+Content-Type: {{contentType}}
+
+{
+  "name": "키보드",
+  "price": 120000,
+  "description": "기계식 키보드",
+  "stockQuantity": 30
+}
+
+### 4. 상품 조회 (ID: 1)
+GET {{baseUrl}}/api/products/1
+
+### 5. 모든 상품 조회
+GET {{baseUrl}}/api/products
+
+### 6. 판매 가능한 상품 조회
+GET {{baseUrl}}/api/products/available
+
+### 7. 상품명으로 검색
+GET {{baseUrl}}/api/products/search?name=노트북
+
+### 8. 상품 수정
+PUT {{baseUrl}}/api/products/1
+Content-Type: {{contentType}}
+
+{
+  "name": "노트북 프로",
+  "price": 2000000,
+  "description": "업그레이드된 고성능 게이밍 노트북",
+  "stockQuantity": 50
+}
+
+### 9. 재고 추가
+POST {{baseUrl}}/api/products/1/stock/add?quantity=20
+
+### 10. 재고 감소
+POST {{baseUrl}}/api/products/1/stock/remove?quantity=10
+
+### 11. 상품 상태 변경 - 품절
+PATCH {{baseUrl}}/api/products/1/status?status=OUT_OF_STOCK
+
+### 12. 상품 상태 변경 - 판매 가능
+PATCH {{baseUrl}}/api/products/1/status?status=AVAILABLE
+
+### 13. 상품 상태 변경 - 판매 중단
+PATCH {{baseUrl}}/api/products/1/status?status=DISCONTINUED
+
+### 14. 상품 삭제
+DELETE {{baseUrl}}/api/products/1
+
+### 15. 유효성 검증 테스트 - 상품명 없음 (실패 예상)
+POST {{baseUrl}}/api/products
+Content-Type: {{contentType}}
+
+{
+  "price": 10000,
+  "stockQuantity": 100
+}
+
+### 16. 유효성 검증 테스트 - 가격 음수 (실패 예상)
+POST {{baseUrl}}/api/products
+Content-Type: {{contentType}}
+
+{
+  "name": "테스트 상품",
+  "price": -1000,
+  "stockQuantity": 100
+}
+
+### 17. 존재하지 않는 상품 조회 (실패 예상)
+GET {{baseUrl}}/api/products/999999
+
